@@ -14,6 +14,7 @@
 		2C82F93B1D2C0E06007F3E64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C82F9391D2C0E06007F3E64 /* LaunchScreen.storyboard */; };
 		2C82F9461D2C0E06007F3E64 /* ChatRealTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82F9451D2C0E06007F3E64 /* ChatRealTimeTests.swift */; };
 		2C82F9511D2C0E06007F3E64 /* ChatRealTimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82F9501D2C0E06007F3E64 /* ChatRealTimeUITests.swift */; };
+		2C82F9601D2C0F8E007F3E64 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82F95F1D2C0F8E007F3E64 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		2C82F94C1D2C0E06007F3E64 /* ChatRealTimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatRealTimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82F9501D2C0E06007F3E64 /* ChatRealTimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRealTimeUITests.swift; sourceTree = "<group>"; };
 		2C82F9521D2C0E06007F3E64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C82F95F1D2C0F8E007F3E64 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controller/LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +99,8 @@
 		2C82F92F1D2C0E06007F3E64 /* ChatRealTime */ = {
 			isa = PBXGroup;
 			children = (
+				2C82F95E1D2C0F48007F3E64 /* Controller */,
 				2C82F9301D2C0E06007F3E64 /* AppDelegate.swift */,
-				2C82F9321D2C0E06007F3E64 /* ViewController.swift */,
 				2C82F9341D2C0E06007F3E64 /* Main.storyboard */,
 				2C82F9371D2C0E06007F3E64 /* Assets.xcassets */,
 				2C82F9391D2C0E06007F3E64 /* LaunchScreen.storyboard */,
@@ -123,6 +125,15 @@
 				2C82F9521D2C0E06007F3E64 /* Info.plist */,
 			);
 			path = ChatRealTimeUITests;
+			sourceTree = "<group>";
+		};
+		2C82F95E1D2C0F48007F3E64 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C82F95F1D2C0F8E007F3E64 /* LoginViewController.swift */,
+				2C82F9321D2C0E06007F3E64 /* ViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C82F9601D2C0F8E007F3E64 /* LoginViewController.swift in Sources */,
 				2C82F9331D2C0E06007F3E64 /* ViewController.swift in Sources */,
 				2C82F9311D2C0E06007F3E64 /* AppDelegate.swift in Sources */,
 			);
@@ -401,6 +413,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ChatRealTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dantesolorio.ChatRealTime;
@@ -412,6 +425,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ChatRealTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dantesolorio.ChatRealTime;
