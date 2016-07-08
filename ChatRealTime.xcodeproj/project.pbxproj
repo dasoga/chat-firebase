@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		19ACBD7A0880867DA7F619C5 /* Pods_ChatRealTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3998CA2D2E726FC1EC26808 /* Pods_ChatRealTime.framework */; };
+		2C23D5521D301272003B7414 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D5511D301272003B7414 /* NewMessageController.swift */; };
+		2C23D5551D3017E1003B7414 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D5541D3017E1003B7414 /* User.swift */; };
 		2C82F9311D2C0E06007F3E64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82F9301D2C0E06007F3E64 /* AppDelegate.swift */; };
-		2C82F9331D2C0E06007F3E64 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82F9321D2C0E06007F3E64 /* ViewController.swift */; };
+		2C82F9331D2C0E06007F3E64 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82F9321D2C0E06007F3E64 /* MessagesController.swift */; };
 		2C82F9361D2C0E06007F3E64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C82F9341D2C0E06007F3E64 /* Main.storyboard */; };
 		2C82F9381D2C0E06007F3E64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82F9371D2C0E06007F3E64 /* Assets.xcassets */; };
 		2C82F93B1D2C0E06007F3E64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C82F9391D2C0E06007F3E64 /* LaunchScreen.storyboard */; };
@@ -39,9 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C23D5511D301272003B7414 /* NewMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMessageController.swift; path = Controller/NewMessageController.swift; sourceTree = "<group>"; };
+		2C23D5541D3017E1003B7414 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		2C82F92D1D2C0E06007F3E64 /* ChatRealTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatRealTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82F9301D2C0E06007F3E64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2C82F9321D2C0E06007F3E64 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2C82F9321D2C0E06007F3E64 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 		2C82F9351D2C0E06007F3E64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2C82F9371D2C0E06007F3E64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C82F93A1D2C0E06007F3E64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -93,6 +97,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C23D5531D3017CC003B7414 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2C23D5541D3017E1003B7414 /* User.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		2C82F9241D2C0E06007F3E64 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +130,7 @@
 		2C82F92F1D2C0E06007F3E64 /* ChatRealTime */ = {
 			isa = PBXGroup;
 			children = (
+				2C23D5531D3017CC003B7414 /* Model */,
 				2C82F95E1D2C0F48007F3E64 /* Controller */,
 				2C82F9301D2C0E06007F3E64 /* AppDelegate.swift */,
 				2C82F9341D2C0E06007F3E64 /* Main.storyboard */,
@@ -151,7 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				2C82F95F1D2C0F8E007F3E64 /* LoginViewController.swift */,
-				2C82F9321D2C0E06007F3E64 /* ViewController.swift */,
+				2C82F9321D2C0E06007F3E64 /* MessagesController.swift */,
+				2C23D5511D301272003B7414 /* NewMessageController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -443,8 +457,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C23D5521D301272003B7414 /* NewMessageController.swift in Sources */,
 				2C82F9601D2C0F8E007F3E64 /* LoginViewController.swift in Sources */,
-				2C82F9331D2C0E06007F3E64 /* ViewController.swift in Sources */,
+				2C82F9331D2C0E06007F3E64 /* MessagesController.swift in Sources */,
+				2C23D5551D3017E1003B7414 /* User.swift in Sources */,
 				2C82F9311D2C0E06007F3E64 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
