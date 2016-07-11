@@ -32,6 +32,8 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
             }
             
             // Successfully logged in our user
+            self.messagesController?.fetchUserAndSetupNavBarTtitle()
+            
             self.dismissViewControllerAnimated(true, completion: nil)
         })
     }
@@ -85,6 +87,8 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
                 print(err)
                 return
             }
+            
+            self.messagesController?.navigationItem.title = values["name"] as? String
             
             self.dismissViewControllerAnimated(true, completion: nil)
         })
