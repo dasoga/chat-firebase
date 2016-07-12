@@ -19,11 +19,14 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         return textField
     }()
 
+    var user: User? {
+        didSet {
+            navigationItem.title = user?.name
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "Chat Log Controlelr"
         
         collectionView?.backgroundColor = .whiteColor()
         
@@ -79,7 +82,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         let ref = FIRDatabase.database().reference().child("messages")
         let childRef = ref.childByAutoId()
         
-        let values = ["text": inputMessageTextField.text!, "name": "Constant name"]
+        let toId = user!.id!
+        let fromId = FIRAuth.auth()!.currentUser!.uid
+        let timestamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+        let values = ["text": inputMessageTextField.text!, "toId": toId, "fromId": fromId, "timestamp": timestamp]
         childRef.updateChildValues(values)
     }
     
