@@ -12,6 +12,7 @@
 		2C23D5551D3017E1003B7414 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D5541D3017E1003B7414 /* User.swift */; };
 		2C23D5571D301FAA003B7414 /* LoginController+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D5561D301FAA003B7414 /* LoginController+handlers.swift */; };
 		2C23D55E1D33EE48003B7414 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D55D1D33EE48003B7414 /* Extensions.swift */; };
+		2C23D5601D348A97003B7414 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D55F1D348A97003B7414 /* ChatLogController.swift */; };
 		2C82F9311D2C0E06007F3E64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82F9301D2C0E06007F3E64 /* AppDelegate.swift */; };
 		2C82F9331D2C0E06007F3E64 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82F9321D2C0E06007F3E64 /* MessagesController.swift */; };
 		2C82F9361D2C0E06007F3E64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C82F9341D2C0E06007F3E64 /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		2C23D5541D3017E1003B7414 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		2C23D5561D301FAA003B7414 /* LoginController+handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LoginController+handlers.swift"; path = "Controller/LoginController+handlers.swift"; sourceTree = "<group>"; };
 		2C23D55D1D33EE48003B7414 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Helpers/Extensions.swift; sourceTree = "<group>"; };
+		2C23D55F1D348A97003B7414 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatLogController.swift; path = Controller/ChatLogController.swift; sourceTree = "<group>"; };
 		2C82F92D1D2C0E06007F3E64 /* ChatRealTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatRealTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82F9301D2C0E06007F3E64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C82F9321D2C0E06007F3E64 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				2C82F9321D2C0E06007F3E64 /* MessagesController.swift */,
 				2C23D5511D301272003B7414 /* NewMessageController.swift */,
 				2C23D5561D301FAA003B7414 /* LoginController+handlers.swift */,
+				2C23D55F1D348A97003B7414 /* ChatLogController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C23D5601D348A97003B7414 /* ChatLogController.swift in Sources */,
 				2C23D5521D301272003B7414 /* NewMessageController.swift in Sources */,
 				2C82F9601D2C0F8E007F3E64 /* LoginViewController.swift in Sources */,
 				2C23D5571D301FAA003B7414 /* LoginController+handlers.swift in Sources */,
