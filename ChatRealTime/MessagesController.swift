@@ -12,6 +12,9 @@ import Firebase
 class MessagesController: UITableViewController {
     
     var messages = [Message]()
+    var messagesDictionary = [String: Message]()
+    
+    var cellId = "cellId"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,8 @@ class MessagesController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: newMessageIconImage, style: .Plain, target: self, action: #selector(handleNewMessage))
      
         checkIfUSerIsLoggedIn()
+        
+        tableView.registerClass(UserCell.self, forCellReuseIdentifier: cellId)
         
         observeMessages()
     }
@@ -33,6 +38,15 @@ class MessagesController: UITableViewController {
                 let message = Message()
                 message.setValuesForKeysWithDictionary(dictionary)
                 self.messages.append(message)
+                
+                if let toId = message.toId{
+                    self.messagesDictionary[toId] = message
+                    
+                    self.messages = Array(self.messagesDictionary.values)
+                    self.messages.sortInPlace({ (message1, message2) -> Bool in
+                        return message1.timestamp?.intValue > message2.timestamp?.intValue
+                    })
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), { 
                     self.tableView.reloadData()
@@ -145,14 +159,16 @@ class MessagesController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cellId")
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as! UserCell
         
-        let message = messages[indexPath.item]
-        
-        cell.textLabel?.text = message.toId
-        cell.detailTextLabel?.text = message.text
+        let message = messages[indexPath.item]        
+        cell.message = message
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 72
     }
 
 
