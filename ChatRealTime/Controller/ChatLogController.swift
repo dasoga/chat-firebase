@@ -86,7 +86,22 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         let fromId = FIRAuth.auth()!.currentUser!.uid
         let timestamp: NSNumber = Int(NSDate().timeIntervalSince1970)
         let values = ["text": inputMessageTextField.text!, "toId": toId, "fromId": fromId, "timestamp": timestamp]
-        childRef.updateChildValues(values)
+//        childRef.updateChildValues(values)
+        
+        childRef.updateChildValues(values) { (error, ref) in
+            if error != nil{
+                print(error)
+                return
+            }
+            
+             let userMessageRef = FIRDatabase.database().reference().child("user-messages").child(fromId)
+            
+            let messageId = childRef.key
+            userMessageRef.updateChildValues([messageId: 1])
+            
+            let recipientUserMessageRef = FIRDatabase.database().reference().child("user-messages").child(toId)
+            recipientUserMessageRef.updateChildValues([messageId: 1])
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
