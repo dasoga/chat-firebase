@@ -164,6 +164,27 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return NSString(string: text).boundingRectWithSize(size, options: options, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(16)], context: nil)
     }
     
+    private func setupCell(cell: ChatMessageCell, message: Message){
+        if let profileImageUrl = self.user?.profileImageUrl{
+            cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+        }
+        
+        if message.fromId == FIRAuth.auth()?.currentUser?.uid{
+            cell.bubbleView.backgroundColor = ChatMessageCell.blueColor
+            cell.textView.textColor = .whiteColor()
+            cell.profileImageView.hidden = true
+            cell.bubbleViewRightAnchor?.active = true
+            cell.bubbleViewLeftAnchor?.active = false
+        }else{
+            cell.bubbleView.backgroundColor = UIColor(r: 240, g: 240, b: 240)
+            cell.textView.textColor = .blackColor()
+            cell.profileImageView.hidden = false
+            cell.bubbleViewRightAnchor?.active = false
+            cell.bubbleViewLeftAnchor?.active = true
+        }
+        
+    }
+    
     
     // MARK: - Collection view methods
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -174,6 +195,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as! ChatMessageCell
         let message = messages[indexPath.item]
         cell.textView.text = message.text
+        
+        setupCell(cell, message: message)
         
         cell.bubbleWidthAnchor?.constant = estimateFrameForText(message.text!).width + 32
         
