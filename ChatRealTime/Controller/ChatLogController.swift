@@ -103,6 +103,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 return
             }
             
+            self.inputMessageTextField.text = nil
+            
              let userMessageRef = FIRDatabase.database().reference().child("user-messages").child(fromId)
             
             let messageId = childRef.key
@@ -137,8 +139,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 
                 let message = Message()
                 message.setValuesForKeysWithDictionary(dictionary)
-
-                
                 
                 if message.chatPartnerId() == self.user?.id {
                     self.messages.append(message)

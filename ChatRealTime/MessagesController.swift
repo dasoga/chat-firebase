@@ -28,7 +28,6 @@ class MessagesController: UITableViewController {
         tableView.registerClass(UserCell.self, forCellReuseIdentifier: cellId)
         
 //        observeMessages()
-//        observeUserMessages()
     }
     
     func observeUserMessages(){
@@ -46,7 +45,6 @@ class MessagesController: UITableViewController {
                 if let dictionary = snapshot.value as? [String: AnyObject]{
                     let message = Message()
                     message.setValuesForKeysWithDictionary(dictionary)
-                    self.messages.append(message)
                     
                     if let toId = message.toId{
                         self.messagesDictionary[toId] = message
@@ -225,12 +223,13 @@ class MessagesController: UITableViewController {
         }
         
         let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
-        ref.observeEventType(.Value, withBlock: { (snapshot) in
+        ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard let dictionary = snapshot.value as? [String:AnyObject] else{
                 return
             }
             
             let user = User()
+            user.id = chatPartnerId
             user.setValuesForKeysWithDictionary(dictionary)
             self.showChatControllerForUser(user)
             
