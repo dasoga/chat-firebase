@@ -28,7 +28,7 @@ class MessagesController: UITableViewController {
         tableView.registerClass(UserCell.self, forCellReuseIdentifier: cellId)
         
 //        observeMessages()
-        observeUserMessages()
+//        observeUserMessages()
     }
     
     func observeUserMessages(){
@@ -215,6 +215,27 @@ class MessagesController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 72
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let message = messages[indexPath.row]
+        
+        guard let chatPartnerId = message.chatPartnerId() else {
+            return
+        }
+        
+        let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
+        ref.observeEventType(.Value, withBlock: { (snapshot) in
+            guard let dictionary = snapshot.value as? [String:AnyObject] else{
+                return
+            }
+            
+            let user = User()
+            user.setValuesForKeysWithDictionary(dictionary)
+            self.showChatControllerForUser(user)
+            
+            }, withCancelBlock: nil)
+        
     }
 
 
