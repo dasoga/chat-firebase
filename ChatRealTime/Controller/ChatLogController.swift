@@ -196,12 +196,12 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             
             self.inputMessageTextField.text = nil
             
-             let userMessageRef = FIRDatabase.database().reference().child("user-messages").child(fromId)
+             let userMessageRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child(toId)
             
             let messageId = childRef.key
             userMessageRef.updateChildValues([messageId: 1])
             
-            let recipientUserMessageRef = FIRDatabase.database().reference().child("user-messages").child(toId)
+            let recipientUserMessageRef = FIRDatabase.database().reference().child("user-messages").child(toId).child(fromId)
             recipientUserMessageRef.updateChildValues([messageId: 1])
         }
     }
@@ -212,11 +212,11 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     func observeMessages(){
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else{
+        guard let uid = FIRAuth.auth()?.currentUser?.uid, toId = user?.id else{
             return
         }
         
-        let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(uid)
+        let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(uid).child(toId)
         userMessagesRef.observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
             let messageId = snapshot.key
@@ -231,14 +231,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 let message = Message()
                 message.setValuesForKeysWithDictionary(dictionary)
                 
-                if message.chatPartnerId() == self.user?.id {
-                    self.messages.append(message)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.collectionView?.reloadData()
-                    })
-                }
-                
-                
+                self.messages.append(message)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.collectionView?.reloadData()
+                })
                 
                 }, withCancelBlock: nil)
             
