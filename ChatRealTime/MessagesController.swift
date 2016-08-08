@@ -57,8 +57,7 @@ class MessagesController: UITableViewController {
         messageReference.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String: AnyObject]{
-                let message = Message()
-                message.setValuesForKeysWithDictionary(dictionary)
+                let message = Message(dictionary: dictionary)
                 
                 if let chatPartnerId = message.chatPartnerId(){
                     self.messagesDictionary[chatPartnerId] = message
