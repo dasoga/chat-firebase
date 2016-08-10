@@ -33,6 +33,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     
     var containerViewBottomAnchor: NSLayoutConstraint?
     
+    var startingFrame: CGRect?
+    var blackBackgroundView: UIView?
+    var startingImageView: UIImageView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -310,6 +314,61 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
     }
     
+    func performZoomInForStartingImageView(startingImageView: UIImageView){
+        self.startingImageView = startingImageView
+        self.startingImageView?.hidden = true
+        
+        startingFrame = startingImageView.superview?.convertRect(startingImageView.frame, toView: nil)
+        print(startingFrame)
+        
+        let zoomingImageView = UIImageView(frame: startingFrame!)
+        zoomingImageView.backgroundColor = .redColor()
+        zoomingImageView.image = startingImageView.image
+        zoomingImageView.userInteractionEnabled = true
+        zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+        
+        if let keyWindow = UIApplication.sharedApplication().keyWindow{
+            blackBackgroundView = UIView(frame: keyWindow.frame)
+            blackBackgroundView?.backgroundColor = .blackColor()
+            blackBackgroundView?.alpha = 0
+            keyWindow.addSubview(blackBackgroundView!)
+            
+            keyWindow.addSubview(zoomingImageView)
+            
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .CurveEaseOut, animations: {
+                self.blackBackgroundView?.alpha = 1
+                self.inputContainerView.alpha = 0
+                // MAth?
+                // h2 / w1 = h1 /w1
+                // h2 = h1 / w1 * w1
+                let height = self.startingFrame!.height / self.startingFrame!.width * keyWindow.frame.width
+                
+                zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
+                
+                zoomingImageView.center = keyWindow.center
+
+                }, completion: nil)
+            }
+    }
+    
+    // MARK: -  Handle functions
+    func handleZoomOut(tapGesture: UITapGestureRecognizer){
+        if let zoomingOutView = tapGesture.view {
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .CurveEaseOut, animations: { 
+                zoomingOutView.layer.cornerRadius = 16
+                zoomingOutView.clipsToBounds = true
+                
+                zoomingOutView.frame = self.startingFrame!
+                self.blackBackgroundView?.alpha = 0
+                self.inputContainerView.alpha = 1
+                
+                }, completion: { (completed:Bool) in
+                    zoomingOutView.removeFromSuperview()
+                    self.startingImageView?.hidden = false
+            })
+        }
+    }
+    
     
     // MARK: - Collection view methods
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -318,14 +377,19 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as! ChatMessageCell
+        
+        cell.chatLogController = self
+        
         let message = messages[indexPath.item]
         cell.textView.text = message.text
         
         setupCell(cell, message: message)
         if let text = message.text{
             cell.bubbleWidthAnchor?.constant = estimateFrameForText(text).width + 32
+            cell.textView.hidden = false
         }else if message.imageUrl != nil {
             cell.bubbleWidthAnchor?.constant = 200
+            cell.textView.hidden = true
         }
         
         return cell
