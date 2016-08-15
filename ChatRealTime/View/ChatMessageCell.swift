@@ -7,14 +7,35 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ChatMessageCell: UICollectionViewCell {
     
+    var message: Message?
+    
     var chatLogController: ChatLogController?
+    
+    var playerLayer: AVPlayerLayer?
+    var player: AVPlayer?
+    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        aiv.translatesAutoresizingMaskIntoConstraints = false
+        aiv.hidesWhenStopped = true
+        return aiv
+    }()
+    
+    lazy var playButton: UIButton = {
+        let button = UIButton(type: .System)
+        button.setImage(UIImage(named: "play"), forState: .Normal)
+        button.tintColor = .whiteColor()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handlePlay), forControlEvents: .TouchUpInside)
+        return button
+    }()
     
     let textView: UITextView = {
         let tv = UITextView()
-//        tv.text = "SAMPLE TEXT"
         tv.font = UIFont.systemFontOfSize(16)
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.backgroundColor = .clearColor()
@@ -74,6 +95,19 @@ class ChatMessageCell: UICollectionViewCell {
         messageImageView.topAnchor.constraintEqualToAnchor(bubbleView.topAnchor).active = true
         messageImageView.bottomAnchor.constraintEqualToAnchor(bubbleView.bottomAnchor).active = true
         
+        bubbleView.addSubview(playButton)
+        playButton.centerXAnchor.constraintEqualToAnchor(bubbleView.centerXAnchor).active = true
+        playButton.centerYAnchor.constraintEqualToAnchor(bubbleView.centerYAnchor).active = true
+        playButton.widthAnchor.constraintEqualToConstant(50).active = true
+        playButton.heightAnchor.constraintEqualToConstant(50).active = true
+        
+        bubbleView.addSubview(activityIndicatorView)
+        activityIndicatorView.centerXAnchor.constraintEqualToAnchor(bubbleView.centerXAnchor).active = true
+        activityIndicatorView.centerYAnchor.constraintEqualToAnchor(bubbleView.centerYAnchor).active = true
+        activityIndicatorView.widthAnchor.constraintEqualToConstant(50).active = true
+        activityIndicatorView.heightAnchor.constraintEqualToConstant(50).active = true
+        
+        
         bubbleViewRightAnchor = bubbleView.rightAnchor.constraintEqualToAnchor(self.rightAnchor, constant: -8)
         bubbleViewRightAnchor?.active = true
         
@@ -102,9 +136,35 @@ class ChatMessageCell: UICollectionViewCell {
     
     // MARK: - Handles functions
     func handleZoomTap(tapGesture: UITapGestureRecognizer){
+        if message?.videoUrl != nil{
+            return
+        }
+        
         if let imageView = tapGesture.view as? UIImageView{
             self.chatLogController?.performZoomInForStartingImageView(imageView)
         }
+    }
+    
+    func handlePlay(){
+        if let videoUrlString = message?.videoUrl, url = NSURL(string: videoUrlString){
+            player = AVPlayer(URL: url)
+            
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer?.frame = bubbleView.bounds
+            bubbleView.layer.addSublayer(playerLayer!)
+            
+            player?.play()
+            activityIndicatorView.startAnimating()
+            playButton.hidden = true
+            print("play video...")
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        playerLayer?.removeFromSuperlayer()
+        player?.pause()
+        activityIndicatorView.stopAnimating()
     }
     
 }
