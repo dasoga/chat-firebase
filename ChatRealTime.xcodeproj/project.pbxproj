@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		19ACBD7A0880867DA7F619C5 /* Pods_ChatRealTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3998CA2D2E726FC1EC26808 /* Pods_ChatRealTime.framework */; };
+		2C05C9321D6529BA00288B81 /* ChatInputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C05C9311D6529BA00288B81 /* ChatInputContainerView.swift */; };
 		2C1DF8071D4281E800ED990B /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DF8061D4281E800ED990B /* ChatMessageCell.swift */; };
 		2C1E34EC1D349F680081EDC6 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E34EB1D349F680081EDC6 /* Message.swift */; };
 		2C1E34EF1D34A3620081EDC6 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E34EE1D34A3620081EDC6 /* UserCell.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C05C9311D6529BA00288B81 /* ChatInputContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatInputContainerView.swift; path = View/ChatInputContainerView.swift; sourceTree = "<group>"; };
 		2C1DF8061D4281E800ED990B /* ChatMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatMessageCell.swift; path = View/ChatMessageCell.swift; sourceTree = "<group>"; };
 		2C1E34EB1D349F680081EDC6 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = Model/Message.swift; sourceTree = "<group>"; };
 		2C1E34EE1D34A3620081EDC6 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = View/UserCell.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			children = (
 				2C1E34EE1D34A3620081EDC6 /* UserCell.swift */,
 				2C1DF8061D4281E800ED990B /* ChatMessageCell.swift */,
+				2C05C9311D6529BA00288B81 /* ChatInputContainerView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C23D5601D348A97003B7414 /* ChatLogController.swift in Sources */,
+				2C05C9321D6529BA00288B81 /* ChatInputContainerView.swift in Sources */,
 				2C23D5521D301272003B7414 /* NewMessageController.swift in Sources */,
 				2C82F9601D2C0F8E007F3E64 /* LoginViewController.swift in Sources */,
 				2C1E34EC1D349F680081EDC6 /* Message.swift in Sources */,
