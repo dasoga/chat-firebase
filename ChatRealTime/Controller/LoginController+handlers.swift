@@ -20,12 +20,12 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
     }
     
     func handleLogin(){
-        guard let email = emailTextField.text, password = passwordTextField.text else{
+        guard let email = emailTextField.text, let password = passwordTextField.text else{
             print("Form is not valid")
             return
         }
         
-        FIRAuth.auth()?.signInWithEmail(email, password: password, completion: { (user, error) in
+        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
             if error != nil{
                 print(error)
                 return
@@ -34,17 +34,17 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
             // Successfully logged in our user
             self.messagesController?.fetchUserAndSetupNavBarTtitle()
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         })
     }
     
     func handleRegister(){
-        guard let email = emailTextField.text, password = passwordTextField.text, name = nameTextField.text else{
+        guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else{
             print("Form is not valid")
             return
         }
         
-        FIRAuth.auth()?.createUserWithEmail(email, password: password, completion: { (user: FIRUser?, error) in
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
             if error != nil{
                 print(error)
                 return
@@ -56,10 +56,10 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
             }
             
             // Successfully
-            let imageName = NSUUID().UUIDString
+            let imageName = UUID().uuidString
             let storageRef = FIRStorage.storage().reference().child("profile_imges").child("\(imageName).jpg")
-            if let profileImage = self.profileImageView.image, uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
-                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+            if let profileImage = self.profileImageView.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
+                storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                     if error != nil{
                         print(error)
                         return
@@ -67,7 +67,7 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
                     
                     if let profileImageUrl = metadata?.downloadURL()?.absoluteString{
                         let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl]
-                        self.registerUserIntoDatabaseWithUID(uid, values: values)
+                        self.registerUserIntoDatabaseWithUID(uid, values: values as [String : AnyObject])
                     }
                 })
             }
@@ -78,7 +78,7 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
         })
     }
     
-    private func registerUserIntoDatabaseWithUID(uid:String, values: [String:AnyObject]){
+    fileprivate func registerUserIntoDatabaseWithUID(_ uid:String, values: [String:AnyObject]){
         let ref = FIRDatabase.database().reference()
         let usersReference = ref.child("users").child(uid)
         usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
@@ -89,49 +89,49 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
             
 //            self.messagesController?.navigationItem.title = values["name"] as? String
             let user = User()
-            user.setValuesForKeysWithDictionary(values)
+            user.setValuesForKeys(values)
             self.messagesController?.setupNavBarWithUser(user)
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         })
     }
     
     func handleRegisterChange(){
-        let title = loginRegisterSegmentedControl.titleForSegmentAtIndex(loginRegisterSegmentedControl.selectedSegmentIndex)
-        loginRegisterButton.setTitle(title, forState: .Normal)
+        let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
+        loginRegisterButton.setTitle(title, for: UIControlState())
         
         // Change height of inputContainerView
         inputContainerViewHeightAnchor?.constant = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 100 : 150
         
         // Change height of name text field
-        nameTextFieldHeightAnchor?.active = false
-        nameTextFieldHeightAnchor = nameTextField.heightAnchor.constraintEqualToAnchor(inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 0 : 1/3)
-        nameTextFieldHeightAnchor?.active = true
+        nameTextFieldHeightAnchor?.isActive = false
+        nameTextFieldHeightAnchor = nameTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 0 : 1/3)
+        nameTextFieldHeightAnchor?.isActive = true
         
         // Change height of email text field
-        emailTextFieldHeightAnchor?.active = false
-        emailTextFieldHeightAnchor = emailTextField.heightAnchor.constraintEqualToAnchor(inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
-        emailTextFieldHeightAnchor?.active = true
+        emailTextFieldHeightAnchor?.isActive = false
+        emailTextFieldHeightAnchor = emailTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
+        emailTextFieldHeightAnchor?.isActive = true
         
         // Change height of password text field
-        passwordTextFieldHeightAnchor?.active = false
-        passwordTextFieldHeightAnchor = passwordTextField.heightAnchor.constraintEqualToAnchor(inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
-        passwordTextFieldHeightAnchor?.active = true
+        passwordTextFieldHeightAnchor?.isActive = false
+        passwordTextFieldHeightAnchor = passwordTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
+        passwordTextFieldHeightAnchor?.isActive = true
     }
     
     func handleSelectProfileImageView(){
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
-        presentViewController(picker, animated: true, completion: nil)
+        present(picker, animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("Canceled picker")
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         var selectedImageFromPicker: UIImage?
         
@@ -145,6 +145,6 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
             profileImageView.image = selectedImage
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

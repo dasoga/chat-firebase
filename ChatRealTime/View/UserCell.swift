@@ -18,20 +18,20 @@ class UserCell: UITableViewCell {
             detailTextLabel?.text = message?.text
             
             if let seconds = message?.timestamp?.doubleValue{
-                let timestampDate = NSDate(timeIntervalSince1970: seconds)
-                let dateFormatter = NSDateFormatter()
+                let timestampDate = Date(timeIntervalSince1970: seconds)
+                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "hh:mm:ss a"
-                timeLabel.text = dateFormatter.stringFromDate(timestampDate)
+                timeLabel.text = dateFormatter.string(from: timestampDate)
 
             }
             
         }
     }
     
-    private func setupNameAndProfileImage(){        
+    fileprivate func setupNameAndProfileImage(){        
         if let id = message?.chatPartnerId() {
             let ref = FIRDatabase.database().reference().child("users").child(id)
-            ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let dictionary = snapshot.value as? [String:AnyObject]{
                     self.textLabel?.text = dictionary["name"] as? String
                     
@@ -40,16 +40,16 @@ class UserCell: UITableViewCell {
                     }
                 }
                 
-                }, withCancelBlock: nil)
+                }, withCancel: nil)
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        textLabel?.frame = CGRectMake(64, textLabel!.frame.origin.y - 2, textLabel!.frame.width, textLabel!.frame.height)
+        textLabel?.frame = CGRect(x: 64, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
         
-        detailTextLabel?.frame = CGRectMake(64, detailTextLabel!.frame.origin.y + 2, detailTextLabel!.frame.width, detailTextLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 64, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
         
     }
     
@@ -58,7 +58,7 @@ class UserCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 24
         imageView.layer.masksToBounds = true
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -67,28 +67,28 @@ class UserCell: UITableViewCell {
         let label = UILabel()
 //        label.text = "HH:MM:SS"
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFontOfSize(12)
-        label.textColor = .darkGrayColor()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .darkGray
         return label
     }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
         addSubview(profileImageView)
         addSubview(timeLabel)
         
         // iOS 9 Constraint anchors
         
-        profileImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 8).active = true
-        profileImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
-        profileImageView.widthAnchor.constraintEqualToConstant(48).active = true
-        profileImageView.heightAnchor.constraintEqualToConstant(48).active = true
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
-        timeLabel.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
-        timeLabel.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
-        timeLabel.widthAnchor.constraintEqualToConstant(100).active = true
-        timeLabel.heightAnchor.constraintEqualToAnchor(textLabel?.heightAnchor).active = true
+        timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        timeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        timeLabel.heightAnchor.constraint(equalTo: (textLabel?.heightAnchor)!).isActive = true
         
         
     }
