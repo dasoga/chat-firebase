@@ -6,18 +6,10 @@ target 'ChatRealTime' do
   use_frameworks!
 
   # Pods for ChatRealTime
-  pod 'Firebase/Database'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Storage'
+  pod 'Firebase/Database' , '~> 3.0'
+  pod 'Firebase/Auth', '~> 3.0'
+  pod 'Firebase/Storage', '~> 3.0'
 
-  target 'ChatRealTimeTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'ChatRealTimeUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  
 
 end
