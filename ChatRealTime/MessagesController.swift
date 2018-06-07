@@ -162,9 +162,9 @@ class MessagesController: UITableViewController {
         profileImageView.layer.cornerRadius = 20
         profileImageView.layer.masksToBounds = true
         profileImageView.contentMode = .scaleAspectFill
-//        if let profileImageUrl = user.profileImageUrl {
-//            profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
-//        }
+        if let profileImageUrl = user.profileImageUrl {
+            profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+        }
         
         containerView.addSubview(profileImageView)
         
